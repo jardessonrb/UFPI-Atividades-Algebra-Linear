@@ -1,0 +1,51 @@
+Aluno: Járdesson Ribeiro dos Santos
+PARA TESTAR O CÓDIGO
+
+Utilize o arquivo input.txt para inserir a matriz no programa seguindo a recomendação de:
+Apenas número devem está no input
+Cada linha da matriz deve estar em uma linha do arquivo
+Cada valor deve ser separado por "," (virgula)
+Cada numero será considerado um decimal por tanto se for algo como 1.5 utilize "." (ponto)
+
+Execute na pasta do projeto comando 'python3 main.py'
+
+Saída será em 3 linhas, dada por:
+Matriz lida
+[[1.0, 4.0, 5.0], [4.0, 5.0, 6.0], [5.0, 8.0, 9.0]] - A matriz que foi lida pelo arquivo
+Determinante da matriz = -48.0
+
+Exemplos de input
+Essa parte não adiciona no input - Matriz 2x2 determinante = 2
+1, 2
+2, 6
+
+Essa parte não adiciona no input - Matriz 3x3 determinante = 5
+1, -2, 3
+2, 1, -1
+-2, -1, 2 
+
+Essa parte não adiciona no input - Matriz 4x4 determinante = -48
+4, 0, 0, 0
+1, 0, 1, 1
+-6, 6, 1, 3
+2, 0, -1, 1
+
+Essa parte não adiciona no input - Matriz 5x5 determinante = -48
+1, 2, 3, -3, 1
+0, 4, 0, 0, 0
+0, 1, 0, 1, 1
+0, -6, 6, 1, 3
+0, 2, 0, -1, 1
+
+Essa parte não adiciona no input - Matriz 6x6 determinante = -24
+-2, -1, 1, 3, 5, 7
+0, 2, 1, 3, 2, 4
+0, 0, 3, -1, 4, 8
+0, 0, 0, 1, 2, 3
+0, 0, 0, 1, 5, 4
+0, 0, 0, 0, 4, 2
+
+
+Referências
+https://www.todamateria.com.br/teorema-de-laplace/
+https://physandmathsolutions.com/pt/Matrices/matrix_determinants/matrix_determinants_5x5.php
