@@ -1,4 +1,5 @@
 from sympy import symbols, Eq, solve, sympify
+import math
 
 class Solucao:
     def __init__(self, vetor: list[float], base_espaco: list[list[float]]) -> None:
@@ -104,27 +105,26 @@ class Solucao:
             
         return novo_vetor
     
-    def transformar_base_em_base_ortonormal(self):
-        vetores_base_ortonormal = []
-        vetores_base_ortonormal.append(self.base[0])
+    def transformar_base_em_base_ortogonal(self):
+        vetores_base_ortogonal = []
+        vetores_base_ortogonal.append(self.base[0])
 
         for i in range(1, len(self.base)):
             vetor_atual = []
             for j in range(i):
 
-                divisao_produto_interno = self.produto_interno_vetores(self.base[i], vetores_base_ortonormal[j]) / self.produto_interno_vetores(vetores_base_ortonormal[j], vetores_base_ortonormal[j])
+                divisao_produto_interno = self.produto_interno_vetores(self.base[i], vetores_base_ortogonal[j]) / self.produto_interno_vetores(vetores_base_ortogonal[j], vetores_base_ortogonal[j])
                 
-                vetor_multiplicado_por_escalar = self.multiplicacao_vetor_por_escalar(divisao_produto_interno, vetores_base_ortonormal[j])
+                vetor_multiplicado_por_escalar = self.multiplicacao_vetor_por_escalar(divisao_produto_interno, vetores_base_ortogonal[j])
 
                 if(len(vetor_atual) == 0):
                     vetor_atual = self.subtracao_vetores(self.base[i],  vetor_multiplicado_por_escalar)
                 else:
                     vetor_atual = self.subtracao_vetores(vetor_atual, vetor_multiplicado_por_escalar)
 
-            vetores_base_ortonormal.append(vetor_atual)
+            vetores_base_ortogonal.append(vetor_atual)
 
-        print(vetores_base_ortonormal)
-        return vetores_base_ortonormal
+        return vetores_base_ortogonal
     
     def resolver_coordenadas_primeira_base(self):
         print("Vetor de entrada")
@@ -140,44 +140,51 @@ class Solucao:
         equacoes_sistema  = self.obter_equacoes_sympy(equacoes)
 
         coordenadas_sistema = solve(equacoes_sistema, variaveis_sistema)
-
-        # print("\nCoordenadas do sistema")
-        # print(coordenadas_sistema)
-
+      
         return coordenadas_sistema
     
     def resolver_coordenadas_base_ortonormal(self, base_ortonormal):
         self.base = base_ortonormal
-
-        print("\n\nRecalcular as coordenadas com a base ortonormal")
         coordenadas = self.resolver_coordenadas_primeira_base()
-        # print("Coordenadas do vetor na nova base ortonormal")
-        # print(coordenadas)
-
+    
         return coordenadas
+    
+    def transformar_base_ortogonal_em_ortonormal(self, base_ortogonalizada):
+        base_ortonormal = []
+        for i in range(len(base_ortogonalizada)):
+            vetor_base = base_ortogonalizada[i]
+            norma_vetor_base = 0
+            for valor in vetor_base:
+                norma_vetor_base += pow(valor, 2)
+            
+            norma_vetor_base = math.sqrt(norma_vetor_base)
+            novo_vetor_ortonormal = []
 
+            for valor in vetor_base:
+                novo_vetor_ortonormal.append(valor / norma_vetor_base)
 
+            base_ortonormal.append(novo_vetor_ortonormal)
+
+        return base_ortonormal
 
     def resolver(self):
-        print("\nCoordenadas 1° Base\n")
         coordenadas_base_inicial  = self.resolver_coordenadas_primeira_base()
+        print("\nCoordenadas 1° Base\n")
+        print(coordenadas_base_inicial)
 
         base_inicial = self.base
 
-        print("\nCoordenadas Base Ortonormal\n")
-        base_ortonormal = self.transformar_base_em_base_ortonormal()
+        print("\n\nBase ortogonal")
+        base_ortogonal = self.transformar_base_em_base_ortogonal()
+        print(base_ortogonal)
 
+        base_ortonormal = self.transformar_base_ortogonal_em_ortonormal(base_ortogonal)
+        print("\n\nBase ortonormal\n")
+        
         coordenadas_base_ortonormal = self.resolver_coordenadas_base_ortonormal(base_ortonormal)
-
-        print("\n\nBase inicial")
-        print(base_inicial)
-        print("Coordenada base inicial")
-        print(coordenadas_base_inicial)
-
-        print("\n\nBase ortonormal")
-        print(base_ortonormal)
-        print("Coordenada base ortonormal")
+        print("\nCoordenadas Base Ortonormal\n")
         print(coordenadas_base_ortonormal)
+
 
 def converter_entreda(entrada: str):
     numeros_str = entrada.replace(" ", "").split(',')
@@ -199,16 +206,17 @@ def ler_entrada():
         
 
 def main():
-    # vetor_b2 = [2, 4]
-    # base_b2 = [[1, 1], [0, 1]]
-    # vetor_b3 = [1, 0, 0]
-    # base_b3 = [[1, 1, 1], [-1, 1, 0], [1, 0, -1]]
-    # base_b4 = [[1, 0, 1], [1, 1, 0], [0, 0, 1]]
-    # base_b2 = [[2, -1], [3, 4]]
-    # solucao3 = Solucao(vetor_b3, base_b3)
-    # solucao2 = Solucao(vetor_b2, base_b2)
-    vetor, base = ler_entrada()
-    solucao_completa = Solucao(vetor, base)
+    vetor_prof = [1, 2, 3]
+    base_prof = [[1, 1, 0], [2, 0, 1], [2, 2, 1]]
+
+    vetor_mtmtc = [2, 4]
+    base_mtmtc  = [[2, -1], [3, 4]]
+
+    vetor_exemplo_sala = [1, 0, 0]
+    base_exemplo_sala  = [[1, 1, 1], [-1, 1, 0], [1, 0, -1]]
+
+    
+    solucao_completa = Solucao(vetor_exemplo_sala, base_exemplo_sala)
     solucao_completa.resolver()
 
 if __name__ == "__main__":
