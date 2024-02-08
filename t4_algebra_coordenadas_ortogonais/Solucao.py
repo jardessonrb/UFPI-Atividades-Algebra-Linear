@@ -216,7 +216,7 @@ def main():
     base_exemplo_sala  = [[1, 1, 1], [-1, 1, 0], [1, 0, -1]]
 
     
-    solucao_completa = Solucao(vetor_exemplo_sala, base_exemplo_sala)
+    solucao_completa = Solucao(vetor_prof, base_prof)
     solucao_completa.resolver()
 
 if __name__ == "__main__":
